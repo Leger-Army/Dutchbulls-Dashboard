@@ -32,8 +32,7 @@ async function loadMembers() {
 
         members.sort((a, b) => b.days - a.days);
 
-        const table =
-            document.getElementById("membersTable");
+        const table = document.getElementById("membersTable");
 
         table.innerHTML = "";
 
@@ -57,6 +56,7 @@ async function loadMembers() {
                 warning++;
             }
             else {
+                css = "active";
                 active++;
             }
 
