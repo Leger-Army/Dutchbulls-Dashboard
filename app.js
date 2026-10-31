@@ -47,6 +47,9 @@ let active=0;
 let warning=0;
 let inactive=0;
 
+// Sorteer van meest naar minst inactief
+dummyData.sort((a, b) => b.days - a.days);
+
 dummyData.forEach(player=>{
 
 let css="";
