@@ -1,66 +1,68 @@
-const GROUP_ID = 6205;
+function loadMembers() {
 
-async function loadMembers() {
+const dummyData = [
 
-const response = await fetch(
-`https://api.wiseoldman.net/v2/groups/${GROUP_ID}/members`
-);
+{
+name:"Sev n Up",
+role:"Quester",
+xp:96403191,
+days:48
+},
 
-const members = await response.json();
+{
+name:"Voorbeeld Speler",
+role:"Quester",
+xp:120000000,
+days:120
+},
 
-let active = 0;
-let warning = 0;
-let inactive = 0;
+{
+name:"Inactieve Speler",
+role:"Maxed",
+xp:350000000,
+days:220
+}
 
-const tbody =
+];
+
+const table =
 document.getElementById("membersTable");
 
-tbody.innerHTML = "";
+table.innerHTML="";
 
-members.forEach(player => {
+let active=0;
+let warning=0;
+let inactive=0;
 
-const lastProgress =
-new Date(player.updatedAt);
+dummyData.forEach(player=>{
 
-const today = new Date();
+let css="";
 
-const days =
-Math.floor(
-(today - lastProgress) /
-(1000 * 60 * 60 * 24)
-);
-
-let rowClass = "";
-
-if(days >= 180){
+if(player.days>=180){
+css="inactive";
 inactive++;
-rowClass = "inactive";
 }
-else if(days >= 90){
+else if(player.days>=90){
+css="warning";
 warning++;
-rowClass = "warning";
 }
 else{
 active++;
 }
 
-const row = `
-<tr class="${rowClass}">
-<td>${player.displayName}</td>
+table.innerHTML+=`
+<tr class="${css}">
+<td>${player.name}</td>
 <td>${player.role}</td>
-<td>${player.exp.toLocaleString()}</td>
-<td>${player.joinedAt ?? "-"}</td>
-<td>${lastProgress.toLocaleDateString()}</td>
-<td>${days}</td>
+<td>${player.xp.toLocaleString()}</td>
+<td>${player.days}</td>
 </tr>
 `;
-
-tbody.innerHTML += row;
 
 });
 
 document.getElementById("members").innerText =
-members.length;
+dummyData.length;
 
 document.getElementById("active").innerText =
 active;
@@ -75,24 +77,23 @@ inactive;
 
 function filterTable(){
 
-let filter =
+const search =
 document.getElementById("search")
-.value.toUpperCase();
+.value
+.toLowerCase();
 
-let rows =
+const rows =
 document.querySelectorAll("#membersTable tr");
 
-rows.forEach(row => {
+rows.forEach(row=>{
 
-if(
-row.innerText.toUpperCase()
-.includes(filter)
-){
-row.style.display="";
-}else{
-row.style.display="none";
-}
+row.style.display =
+row.innerText.toLowerCase().includes(search)
+? ""
+: "none";
+
 });
+
 }
 
 loadMembers();
