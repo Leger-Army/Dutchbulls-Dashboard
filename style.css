@@ -69,7 +69,3 @@ th,td{
 .inactive{
     background:#7a0000;
 }
-
-.active {
-    background: rgba(0, 255, 100, 0.15);
-}
