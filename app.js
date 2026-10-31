@@ -1,8 +1,3 @@
-function formatDate(dateString) {
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("nl-NL");
-}
 async function loadMembers() {
     try {
 
@@ -47,10 +42,7 @@ async function loadMembers() {
         let inactive = 0;
 
         members.forEach(player => {
-else {
-    css = "active";
-    active++;
-}
+
             let css = "";
             let status = "✅";
 
@@ -73,8 +65,8 @@ else {
                     <td>${player.name}</td>
                     <td>${player.role}</td>
                     <td>${player.xp.toLocaleString()}</td>
-                    <td>${formatDate(player.joined)}</td>
-<td>${formatDate(player.lastProgress)}</td>
+                    <td>${player.joined}</td>
+                    <td>${player.lastProgress}</td>
                     <td>${player.days}</td>
                     <td>${status}</td>
                 </tr>
