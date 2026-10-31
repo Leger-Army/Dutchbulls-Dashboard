@@ -1,8 +1,8 @@
 async function loadMembers() {
     try {
-        const response = await fetch(
-            "https://api.wiseoldman.net/v2/groups/6205/csv"
-        );
+    const response = await fetch(
+    "https://api.wiseoldman.net/v2/groups/6205/csv"
+);
 
         const csv = await response.text();
 
