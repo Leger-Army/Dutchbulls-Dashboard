@@ -70,8 +70,8 @@ async function loadMembers() {
                     <td>${player.name}</td>
                     <td>${player.role}</td>
                     <td>${player.xp.toLocaleString()}</td>
-                    <td>${player.joined}</td>
-                    <td>${player.lastProgress}</td>
+                    <td>${formatDate(player.joined)}</td>
+<td>${formatDate(player.lastProgress)}</td>
                     <td>${player.days}</td>
                     <td>${status}</td>
                 </tr>
