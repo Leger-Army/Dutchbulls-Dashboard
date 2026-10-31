@@ -2,10 +2,62 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dutch Bulls Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Dutch Bulls Dashboard</h1>
-    <p>GitHub Pages werkt!</p>
+
+<div class="container">
+
+    <h1>🐂 Dutch Bulls Dashboard</h1>
+
+    <div class="stats">
+        <div class="card">
+            <h2 id="members">0</h2>
+            <p>Leden</p>
+        </div>
+
+        <div class="card green">
+            <h2 id="active">0</h2>
+            <p>Actief</p>
+        </div>
+
+        <div class="card orange">
+            <h2 id="warning">0</h2>
+            <p>3+ maanden</p>
+        </div>
+
+        <div class="card red">
+            <h2 id="inactive">0</h2>
+            <p>6+ maanden</p>
+        </div>
+    </div>
+
+    <button onclick="loadMembers()">🔄 Update</button>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Zoek speler..."
+        onkeyup="filterTable()">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Role</th>
+                <th>XP</th>
+                <th>Dagen inactief</th>
+            </tr>
+        </thead>
+        <tbody id="membersTable">
+        </tbody>
+    </table>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
