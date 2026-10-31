@@ -47,7 +47,10 @@ async function loadMembers() {
         let inactive = 0;
 
         members.forEach(player => {
-
+else {
+    css = "active";
+    active++;
+}
             let css = "";
             let status = "✅";
 
