@@ -48,7 +48,12 @@ let warning=0;
 let inactive=0;
 
 // Sorteer van meest naar minst inactief
-dummyData.sort((a, b) => b.days - a.days);
+dummyData.sort((a, b) => {
+    if (b.days !== a.days) {
+        return b.days - a.days;
+    }
+    return a.name.localeCompare(b.name);
+});
 
 dummyData.forEach(player=>{
 
