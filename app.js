@@ -1,14 +1,16 @@
 async function loadMembers() {
     try {
-    const response = await fetch(
-    "https://api.wiseoldman.net/v2/groups/6205/csv"
-);
+
+        const response = await fetch(
+            "https://api.wiseoldman.net/v2/groups/6205/csv"
+        );
 
         const csv = await response.text();
 
         const rows = csv.trim().split("\n");
 
         const members = rows.slice(1).map(row => {
+
             const values = row.split(",");
 
             const lastProgress = new Date(values[3]);
@@ -28,10 +30,10 @@ async function loadMembers() {
             };
         });
 
-        // Meest inactieve leden bovenaan
         members.sort((a, b) => b.days - a.days);
 
-        const table = document.getElementById("membersTable");
+        const table =
+            document.getElementById("membersTable");
 
         table.innerHTML = "";
 
@@ -40,6 +42,7 @@ async function loadMembers() {
         let inactive = 0;
 
         members.forEach(player => {
+
             let css = "";
             let status = "✅";
 
@@ -47,11 +50,13 @@ async function loadMembers() {
                 css = "inactive";
                 status = "🔴";
                 inactive++;
-            } else if (player.days >= 90) {
+            }
+            else if (player.days >= 90) {
                 css = "warning";
                 status = "🟧";
                 warning++;
-            } else {
+            }
+            else {
                 active++;
             }
 
@@ -81,24 +86,27 @@ async function loadMembers() {
             inactive;
 
     } catch (error) {
-        console.error(error);
+        console.error("Fout:", error);
     }
 }
 
 function filterTable() {
-    const search =
-        document.getElementById("search")
-            .value
-            .toLowerCase();
+
+    const search = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
 
     const rows =
         document.querySelectorAll("#membersTable tr");
 
     rows.forEach(row => {
+
         row.style.display =
             row.innerText.toLowerCase().includes(search)
                 ? ""
                 : "none";
+
     });
 }
 
