@@ -1,3 +1,14 @@
+function formatDate(dateString) {
+
+    if (!dateString) return "-";
+
+    const date = new Date(dateString);
+
+    if (isNaN(date)) return dateString;
+
+    return date.toLocaleDateString("nl-NL");
+}
+
 async function loadMembers() {
     try {
 
@@ -65,8 +76,8 @@ async function loadMembers() {
                     <td>${player.name}</td>
                     <td>${player.role}</td>
                     <td>${player.xp.toLocaleString()}</td>
-                    <td>${player.joined}</td>
-                    <td>${player.lastProgress}</td>
+                    <td>${formatDate(player.joined)}</td>
+                    <td>${formatDate(player.lastProgress)}</td>
                     <td>${player.days}</td>
                     <td>${status}</td>
                 </tr>
