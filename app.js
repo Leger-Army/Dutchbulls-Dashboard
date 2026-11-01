@@ -1,3 +1,5 @@
+let activeCardFilter = "all";
+
 function formatDate(dateString) {
 
     if (!dateString) return "-";
