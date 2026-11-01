@@ -108,6 +108,16 @@ td{
 
 th{
     text-align:left;
+    cursor:pointer;
+    user-select:none;
+    transition:all .2s ease;
+    position:relative;
+}
+
+th:hover{
+    background:rgba(255,255,255,.08);
+    color:#00d26a;
+    padding-left:16px;
 }
 
 tr:hover{
@@ -257,4 +267,10 @@ tr:hover{
 .selected-all{
     background:#1976d2;
     box-shadow:0 0 20px rgba(25,118,210,.4);
+}
+
+th[onclick]{
+    cursor:pointer;
+    user-select:none;
+    transition:all .2s ease;
 }
