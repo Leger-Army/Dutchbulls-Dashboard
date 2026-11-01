@@ -274,3 +274,22 @@ th[onclick]{
     user-select:none;
     transition:all .2s ease;
 }
+
+th{
+    text-align:left;
+    cursor:pointer;
+    user-select:none;
+    transition:all .2s ease;
+}
+
+th:hover{
+    background:rgba(255,255,255,.08);
+    color:#00d26a;
+}
+th[id^="sort-"]{
+    position:relative;
+}
+
+th[id^="sort-"]:hover{
+    padding-left:16px;
+}
