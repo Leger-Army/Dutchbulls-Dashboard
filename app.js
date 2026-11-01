@@ -148,9 +148,15 @@ function setCardFilter(filter) {
         document.querySelector(".orange").classList.add("selected");
     }
 
-    if (filter === "inactive") {
-        document.querySelector(".red").classList.add("selected");
-    }
+   if (filter === "inactive") {
+    document.querySelectorAll(".red")[0]
+        .classList.add("selected");
+}
+
+if (filter === "moderation") {
+    document.querySelectorAll(".red")[1]
+        .classList.add("selected");
+}
 
     filterTable();
 }
@@ -207,6 +213,20 @@ function filterTable() {
                 row.classList.contains("inactive");
         }
 
+        else if (activeCardFilter === "moderation") {
+
+    const role =
+        row.children[1]
+            .innerText
+            .toLowerCase();
+
+    matchesStatus =
+        row.classList.contains("inactive") &&
+        role !== "owner" &&
+        role !== "deputy_owner" &&
+        role !== "moderator";
+}
+
         row.style.display =
             matchesSearch &&
             matchesRole &&
@@ -227,7 +247,8 @@ function updateStats() {
     let active = 0;
     let warning = 0;
     let inactive = 0;
-
+    let moderation = 0;
+    
     rows.forEach(row => {
 
         if(row.style.display === "none"){
@@ -237,8 +258,22 @@ function updateStats() {
         members++;
 
         if(row.classList.contains("inactive")){
-            inactive++;
-        }
+
+    inactive++;
+
+    const role =
+        row.children[1]
+            .innerText
+            .toLowerCase();
+
+    if(
+        role !== "owner" &&
+        role !== "deputy_owner" &&
+        role !== "moderator"
+    ){
+        moderation++;
+    }
+}
         else if(row.classList.contains("warning")){
             warning++;
         }
@@ -387,3 +422,6 @@ function updateSortIndicators() {
 
 loadMembers();
     setCardFilter("all");
+
+document.getElementById("moderation")
+    .innerText = moderation;
