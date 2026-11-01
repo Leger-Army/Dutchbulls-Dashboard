@@ -240,3 +240,4 @@ function populateRoleFilter() {
 }
 
 loadMembers();
+    setCardFilter("all");
