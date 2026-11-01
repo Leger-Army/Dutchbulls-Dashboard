@@ -186,3 +186,39 @@ tr:hover{
 .card.selected h2{
     transform:scale(1.05);
 }
+
+.filters{
+    display:flex;
+    gap:10px;
+    margin:15px 0;
+}
+
+.filter-btn{
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    background:#2c2c2c;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.filter-btn:hover{
+    opacity:.9;
+}
+
+.active-all{
+    background:#1976d2;
+}
+
+.active-green{
+    background:#00c853;
+}
+
+.active-orange{
+    background:#ff9800;
+}
+
+.active-red{
+    background:#d50000;
+}
