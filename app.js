@@ -1,6 +1,5 @@
 let activeCardFilter = "all";
 let allMembers = [];
-
 let currentSort = "days";
 let sortDirection = "desc";
 
@@ -57,8 +56,6 @@ async function loadMembers() {
 
         updateSortIndicators();
 
-        setCardFilter("all");
-
     } catch (error) {
 
         console.error("Fout:", error);
@@ -73,27 +70,31 @@ function renderTable() {
 
     table.innerHTML = "";
 
+    let active = 0;
+    let warning = 0;
+    let inactive = 0;
+
     allMembers.forEach(player => {
 
         let css = "";
         let status = "✅";
 
-        if (player.days >= 90) {
+        if (player.days >= 180) {
 
             css = "inactive";
             status = "🔴";
+            inactive++;
 
-        }
-        else if (player.days >= 75) {
+        } else if (player.days >= 90) {
 
             css = "warning";
             status = "🟧";
+            warning++;
 
-        }
-        else {
+        } else {
 
             css = "active";
-            status = "✅";
+            active++;
 
         }
 
@@ -110,7 +111,21 @@ function renderTable() {
         `;
     });
 
+    document.getElementById("members").innerText =
+        allMembers.length;
+
+    document.getElementById("active").innerText =
+        active;
+
+    document.getElementById("warning").innerText =
+        warning;
+
+    document.getElementById("inactive").innerText =
+        inactive;
+
     filterTable();
+
+    updateStats();
 }
 
 function setCardFilter(filter) {
@@ -134,13 +149,7 @@ function setCardFilter(filter) {
     }
 
     if (filter === "inactive") {
-        document.querySelectorAll(".red")[0]
-            .classList.add("selected");
-    }
-
-    if (filter === "moderation") {
-        document.querySelectorAll(".red")[1]
-            .classList.add("selected");
+        document.querySelector(".red").classList.add("selected");
     }
 
     filterTable();
@@ -184,27 +193,18 @@ function filterTable() {
 
             matchesStatus =
                 row.classList.contains("active");
-
         }
+
         else if (activeCardFilter === "warning") {
 
             matchesStatus =
                 row.classList.contains("warning");
-
         }
+
         else if (activeCardFilter === "inactive") {
 
             matchesStatus =
                 row.classList.contains("inactive");
-
-        }
-        else if (activeCardFilter === "moderation") {
-
-            matchesStatus =
-                row.classList.contains("inactive") &&
-                role !== "owner" &&
-                role !== "deputy_owner" &&
-                role !== "moderator";
         }
 
         row.style.display =
@@ -214,8 +214,50 @@ function filterTable() {
                 ? ""
                 : "none";
     });
-
+    
     updateStats();
+}
+
+function updateStats() {
+
+    const rows =
+        document.querySelectorAll("#membersTable tr");
+
+    let members = 0;
+    let active = 0;
+    let warning = 0;
+    let inactive = 0;
+
+    rows.forEach(row => {
+
+        if(row.style.display === "none"){
+            return;
+        }
+
+        members++;
+
+        if(row.classList.contains("inactive")){
+            inactive++;
+        }
+        else if(row.classList.contains("warning")){
+            warning++;
+        }
+        else{
+            active++;
+        }
+    });
+
+    document.getElementById("members").innerText =
+        members;
+
+    document.getElementById("active").innerText =
+        active;
+
+    document.getElementById("warning").innerText =
+        warning;
+
+    document.getElementById("inactive").innerText =
+        inactive;
 }
 
 function populateRoleFilter() {
@@ -247,68 +289,101 @@ function populateRoleFilter() {
     roleFilter.value = currentValue;
 }
 
-function updateStats() {
+function sortTable(field) {
 
-    const rows =
-        document.querySelectorAll("#membersTable tr");
+    if (currentSort === field) {
 
-    let members = 0;
-    let active = 0;
-    let warning = 0;
-    let inactive = 0;
-    let moderation = 0;
+        sortDirection =
+            sortDirection === "asc"
+                ? "desc"
+                : "asc";
 
-    rows.forEach(row => {
+    } else {
 
-        if (row.style.display === "none") {
-            return;
-        }
+        currentSort = field;
 
-        members++;
-
-        if (row.classList.contains("inactive")) {
-
-            inactive++;
-
-            const role =
-                row.children[1]
-                    .innerText
-                    .toLowerCase();
-
-            if (
-                role !== "owner" &&
-                role !== "deputy_owner" &&
-                role !== "moderator"
-            ) {
-                moderation++;
-            }
-
-        } else if (row.classList.contains("warning")) {
-
-            warning++;
-
+        if (field === "days") {
+            sortDirection = "desc";
         } else {
+            sortDirection = "asc";
+        }
+    }
 
-            active++;
+    allMembers.sort((a, b) => {
 
+        let result = 0;
+
+        switch (field) {
+
+            case "name":
+                result =
+                    a.name.localeCompare(b.name);
+                break;
+
+            case "role":
+                result =
+                    a.role.localeCompare(b.role);
+                break;
+
+            case "xp":
+                result =
+                    a.xp - b.xp;
+                break;
+
+            case "days":
+                result =
+                    a.days - b.days;
+                break;
         }
 
+        return sortDirection === "asc"
+            ? result
+            : -result;
     });
 
-    document.getElementById("members").innerText =
-        members;
+    renderTable();
+    updateSortIndicators();
+}
 
-    document.getElementById("active").innerText =
-        active;
+function updateSortIndicators() {
 
-    document.getElementById("warning").innerText =
-        warning;
+    document
+        .querySelectorAll('th[id^="sort-"]')
+        .forEach(th => {
+            th.classList.remove("active-sort");
+        });
 
-    document.getElementById("inactive").innerText =
-        inactive;
+    const headers = {
+        name: "Naam",
+        role: "Role",
+        xp: "XP",
+        days: "Dagen Inactief"
+    };
 
-    document.getElementById("moderation").innerText =
-        moderation;
+    document.getElementById("sort-name").innerHTML =
+        headers.name;
+
+    document.getElementById("sort-role").innerHTML =
+        headers.role;
+
+    document.getElementById("sort-xp").innerHTML =
+        headers.xp;
+
+    document.getElementById("sort-days").innerHTML =
+        headers.days;
+
+    const activeHeader =
+        document.getElementById(
+            `sort-${currentSort}`
+        );
+
+    activeHeader.classList.add("active-sort");
+
+    activeHeader.innerHTML +=
+        sortDirection === "asc"
+            ? " ▲"
+            : " ▼";
 }
 
 loadMembers();
+    setCardFilter("all");
