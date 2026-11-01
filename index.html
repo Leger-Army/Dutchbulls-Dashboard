@@ -1,78 +1,106 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dutch Bulls Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>🐂 Dutch Bulls Dashboard</h1>
+        <h1>🐂 Dutch Bulls Dashboard</h1>
 
-    <div class="stats">
-        <div class="card" onclick="setCardFilter('all')">
-    <h2 id="members">0</h2>
-    <p>Leden</p>
-</div>
+        <div class="stats">
 
-<div class="card green" onclick="setCardFilter('active')">
-    <h2 id="active">0</h2>
-    <p>Actief</p>
-</div>
+            <div class="card" onclick="setCardFilter('all')">
+                <h2 id="members">0</h2>
+                <p>Leden</p>
+            </div>
 
-<div class="card orange" onclick="setCardFilter('warning')">
-    <h2 id="warning">0</h2>
-    <p>Waarschuwing</p>
-</div>
+            <div class="card green" onclick="setCardFilter('active')">
+                <h2 id="active">0</h2>
+                <p>Actief</p>
+            </div>
 
-<div class="card red" onclick="setCardFilter('inactive')">
-    <h2 id="inactive">0</h2>
-    <p>Verwijderen</p>
-</div>
+            <div class="card orange" onclick="setCardFilter('warning')">
+                <h2 id="warning">0</h2>
+                <p>Waarschuwing</p>
+            </div>
 
-<div class="card red"
-     onclick="setCardFilter('moderation')">
-    <h2 id="moderation">0</h2>
-    <p>⚠️ Verwijderen</p>
-</div>
-        
+            <div class="card red" onclick="setCardFilter('inactive')">
+                <h2 id="inactive">0</h2>
+                <p>Verwijderen</p>
+            </div>
+
+            <div class="card red" onclick="setCardFilter('moderation')">
+                <h2 id="moderation">0</h2>
+                <p>⚠️ Moderatie vereist</p>
+            </div>
+
+        </div>
+
+        <button onclick="loadMembers()">
+            🔄 Update
+        </button>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Zoek speler..."
+            onkeyup="filterTable()"
+        >
+
+        <select id="roleFilter" onchange="filterTable()">
+            <option value="">Alle Rollen</option>
+        </select>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th id="sort-name" onclick="sortTable('name')">
+                        Naam
+                    </th>
+
+                    <th id="sort-role" onclick="sortTable('role')">
+                        Role
+                    </th>
+
+                    <th id="sort-xp" onclick="sortTable('xp')">
+                        XP
+                    </th>
+
+                    <th>
+                        Joined
+                    </th>
+
+                    <th>
+                        Laatste Progressie
+                    </th>
+
+                    <th id="sort-days" onclick="sortTable('days')">
+                        Dagen Inactief
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody id="membersTable">
+            </tbody>
+
+        </table>
+
     </div>
 
-    <button onclick="loadMembers()">🔄 Update</button>
-
-    <input
-        type="text"
-        id="search"
-        placeholder="Zoek speler..."
-        onkeyup="filterTable()"
-    >
-    
-    <select id="roleFilter" onchange="filterTable()">
-    <option value="">Alle Rollen</option>
-    </select>
-    
-    <table>
-        <thead>
-            <tr>
-               <th id="sort-name" onclick="sortTable('name')">Naam</th>
-                <th id="sort-role" onclick="sortTable('role')">Role</th>
-                <th id="sort-xp" onclick="sortTable('xp')">XP</th>
-                <th>Joined</th>
-                <th>Laatste Progressie</th>
-                <th id="sort-days" onclick="sortTable('days')">Dagen Inactief</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-
-        <tbody id="membersTable"></tbody>
-    </table>
-
-</div>
-
-<script src="app.js"></script>
+    <script src="app.js"></script>
 
 </body>
+
 </html>
