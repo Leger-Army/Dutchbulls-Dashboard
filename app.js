@@ -126,6 +126,26 @@ function setCardFilter(filter) {
 
     activeCardFilter = filter;
 
+    document.querySelectorAll(".card").forEach(card => {
+        card.classList.remove("selected");
+    });
+
+    if (filter === "all") {
+        document.querySelector(".card").classList.add("selected");
+    }
+
+    if (filter === "active") {
+        document.querySelector(".green").classList.add("selected");
+    }
+
+    if (filter === "warning") {
+        document.querySelector(".orange").classList.add("selected");
+    }
+
+    if (filter === "inactive") {
+        document.querySelector(".red").classList.add("selected");
+    }
+
     filterTable();
 }
 
