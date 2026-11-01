@@ -1,5 +1,7 @@
 let activeCardFilter = "all";
 let allMembers = [];
+let currentSort = "days";
+let sortDirection = "desc";
 
 function formatDate(dateString) {
 
@@ -237,6 +239,55 @@ function populateRoleFilter() {
     });
 
     roleFilter.value = currentValue;
+}
+
+function sortTable(field) {
+
+    if (currentSort === field) {
+
+        sortDirection =
+            sortDirection === "asc"
+                ? "desc"
+                : "asc";
+
+    } else {
+
+        currentSort = field;
+        sortDirection = "asc";
+
+    }
+
+    allMembers.sort((a, b) => {
+
+        let result = 0;
+
+        if (field === "name") {
+            result =
+                a.name.localeCompare(b.name);
+        }
+
+        if (field === "role") {
+            result =
+                a.role.localeCompare(b.role);
+        }
+
+        if (field === "xp") {
+            result =
+                a.xp - b.xp;
+        }
+
+        if (field === "days") {
+            result =
+                a.days - b.days;
+        }
+
+        return sortDirection === "asc"
+            ? result
+            : -result;
+
+    });
+
+    renderTable();
 }
 
 loadMembers();
