@@ -258,3 +258,9 @@ tr:hover{
     background:#1976d2;
     box-shadow:0 0 20px rgba(25,118,210,.4);
 }
+
+th[onclick]{
+    cursor:pointer;
+    user-select:none;
+    transition:all .2s ease;
+}
