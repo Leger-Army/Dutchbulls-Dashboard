@@ -122,6 +122,9 @@ function renderTable() {
 
     document.getElementById("inactive").innerText =
         inactive;
+    
+    document.getElementById("moderation").innerText = 
+        moderation;
 
     filterTable();
 
@@ -422,6 +425,3 @@ function updateSortIndicators() {
 
 loadMembers();
     setCardFilter("all");
-
-document.getElementById("moderation")
-    .innerText = moderation;
