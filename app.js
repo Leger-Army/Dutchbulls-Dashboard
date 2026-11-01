@@ -79,24 +79,24 @@ function renderTable() {
         let css = "";
         let status = "✅";
 
-        if (player.days >= 180) {
+      if (player.days >= 90) {
 
-            css = "inactive";
-            status = "🔴";
-            inactive++;
+    css = "inactive";
+    status = "🔴";
+    inactive++;
 
-        } else if (player.days >= 90) {
+} else if (player.days >= 75) {
 
-            css = "warning";
-            status = "🟧";
-            warning++;
+    css = "warning";
+    status = "🟧";
+    warning++;
 
-        } else {
+} else {
 
-            css = "active";
-            active++;
-
-        }
+    css = "active";
+    status = "✅";
+    active++;
+}
 
         table.innerHTML += `
             <tr class="${css}">
