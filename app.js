@@ -227,24 +227,45 @@ function updateStats() {
     let active = 0;
     let warning = 0;
     let inactive = 0;
+    let moderation = 0;
 
     rows.forEach(row => {
 
-        if(row.style.display === "none"){
+        if (row.style.display === "none") {
             return;
         }
 
         members++;
 
-        if(row.classList.contains("inactive")){
+        if (row.classList.contains("inactive")) {
+
             inactive++;
+
+            const role =
+                row.children[1]
+                    .innerText
+                    .toLowerCase();
+
+            if (
+                role !== "owner" &&
+                role !== "deputy_owner" &&
+                role !== "moderator"
+            ) {
+                moderation++;
+            }
+
         }
-        else if(row.classList.contains("warning")){
+        else if (row.classList.contains("warning")) {
+
             warning++;
+
         }
-        else{
+        else {
+
             active++;
+
         }
+
     });
 
     document.getElementById("members").innerText =
@@ -258,6 +279,9 @@ function updateStats() {
 
     document.getElementById("inactive").innerText =
         inactive;
+
+    document.getElementById("moderation").innerText =
+        moderation;
 }
 
 function populateRoleFilter() {
