@@ -239,18 +239,22 @@ tr:hover{
     transform:translateY(-2px);
 }
 
-.selected-all{
-    background:#1976d2;
-}
-
 .selected-green{
     background:#00c853;
+    box-shadow:0 0 20px rgba(0,200,83,.4);
 }
 
 .selected-orange{
     background:#ff9800;
+    box-shadow:0 0 20px rgba(255,152,0,.4);
 }
 
 .selected-red{
     background:#d50000;
+    box-shadow:0 0 20px rgba(213,0,0,.4);
+}
+
+.selected-all{
+    background:#1976d2;
+    box-shadow:0 0 20px rgba(25,118,210,.4);
 }
