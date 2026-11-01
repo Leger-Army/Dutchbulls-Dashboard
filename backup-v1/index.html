@@ -36,7 +36,6 @@
 
     <button onclick="loadMembers()">🔄 Update</button>
 
-</div>
     <input
         type="text"
         id="search"
@@ -51,12 +50,12 @@
     <table>
         <thead>
             <tr>
-                <th onclick="sortTable('name')">Naam ↕</th>
-                <th onclick="sortTable('role')">Role ↕</th>
-                <th onclick="sortTable('xp')">XP ↕</th>
+               <th id="sort-name" onclick="sortTable('name')">Naam</th>
+                <th id="sort-role" onclick="sortTable('role')">Role</th>
+                <th id="sort-xp" onclick="sortTable('xp')">XP</th>
                 <th>Joined</th>
                 <th>Laatste Progressie</th>
-                <th onclick="sortTable('days')">Dagen Inactief ↕</th>
+                <th id="sort-days" onclick="sortTable('days')">Dagen Inactief</th>
                 <th>Status</th>
             </tr>
         </thead>
