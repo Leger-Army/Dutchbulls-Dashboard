@@ -254,13 +254,32 @@ function updateStats() {
                 moderation++;
             }
 
-        }
-        else if (row.classList.contains("warning")) {
+        } else if (row.classList.contains("warning")) {
 
             warning++;
 
-        }
-        else {
+        } else {
 
             active++;
+
         }
+
+    });
+
+    document.getElementById("members").innerText =
+        members;
+
+    document.getElementById("active").innerText =
+        active;
+
+    document.getElementById("warning").innerText =
+        warning;
+
+    document.getElementById("inactive").innerText =
+        inactive;
+
+    document.getElementById("moderation").innerText =
+        moderation;
+}
+
+loadMembers();
