@@ -54,6 +54,8 @@ async function loadMembers() {
 
         renderTable();
 
+        updateSortIndicators();
+
     } catch (error) {
 
         console.error("Fout:", error);
@@ -288,6 +290,23 @@ function sortTable(field) {
     });
 
     renderTable();
+}
+
+function updateSortIndicators() {
+
+    document.getElementById("sort-name").innerHTML = "Naam";
+    document.getElementById("sort-role").innerHTML = "Role";
+    document.getElementById("sort-xp").innerHTML = "XP";
+    document.getElementById("sort-days").innerHTML = "Dagen Inactief";
+
+    const arrow =
+        sortDirection === "asc"
+            ? " ↑"
+            : " ↓";
+
+    document.getElementById(
+        `sort-${currentSort}`
+    ).innerHTML += arrow;
 }
 
 loadMembers();
