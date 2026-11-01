@@ -13,6 +13,7 @@ function formatDate(dateString) {
 }
 
 async function loadMembers() {
+
     try {
 
         const response = await fetch(
@@ -31,7 +32,8 @@ async function loadMembers() {
             const today = new Date();
 
             const daysInactive = Math.floor(
-                (today - lastProgress) / (1000 * 60 * 60 * 24)
+                (today - lastProgress) /
+                (1000 * 60 * 60 * 24)
             );
 
             return {
@@ -46,64 +48,78 @@ async function loadMembers() {
 
         allMembers.sort((a, b) => b.days - a.days);
 
-        const table = document.getElementById("membersTable");
-
-        table.innerHTML = "";
-
-        let active = 0;
-        let warning = 0;
-        let inactive = 0;
-
         populateRoleFilter();
 
-        allMembers.forEach(player => {
-
-            let css = "";
-            let status = "✅";
-
-            if (player.days >= 180) {
-                css = "inactive";
-                status = "🔴";
-                inactive++;
-            }
-            else if (player.days >= 90) {
-                css = "warning";
-                status = "🟧";
-                warning++;
-            }
-            else {
-                css = "active";
-                active++;
-            }
-
-            table.innerHTML += `
-                <tr class="${css}">
-                    <td>${player.name}</td>
-                    <td>${player.role}</td>
-                    <td>${player.xp.toLocaleString()}</td>
-                    <td>${formatDate(player.joined)}</td>
-                    <td>${formatDate(player.lastProgress)}</td>
-                    <td>${player.days}</td>
-                    <td>${status}</td>
-                </tr>
-            `;
-        });
-
-    document.getElementById("members").innerText =
-    allMembers.length;
-
-        document.getElementById("active").innerText =
-            active;
-
-        document.getElementById("warning").innerText =
-            warning;
-
-        document.getElementById("inactive").innerText =
-            inactive;
+        renderTable();
 
     } catch (error) {
+
         console.error("Fout:", error);
+
     }
+}
+
+function renderTable() {
+
+    const table =
+        document.getElementById("membersTable");
+
+    table.innerHTML = "";
+
+    let active = 0;
+    let warning = 0;
+    let inactive = 0;
+
+    allMembers.forEach(player => {
+
+        let css = "";
+        let status = "✅";
+
+        if (player.days >= 180) {
+
+            css = "inactive";
+            status = "🔴";
+            inactive++;
+
+        } else if (player.days >= 90) {
+
+            css = "warning";
+            status = "🟧";
+            warning++;
+
+        } else {
+
+            css = "active";
+            active++;
+
+        }
+
+        table.innerHTML += `
+            <tr class="${css}">
+                <td>${player.name}</td>
+                <td>${player.role}</td>
+                <td>${player.xp.toLocaleString()}</td>
+                <td>${formatDate(player.joined)}</td>
+                <td>${formatDate(player.lastProgress)}</td>
+                <td>${player.days}</td>
+                <td>${status}</td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("members").innerText =
+        allMembers.length;
+
+    document.getElementById("active").innerText =
+        active;
+
+    document.getElementById("warning").innerText =
+        warning;
+
+    document.getElementById("inactive").innerText =
+        inactive;
+
+    filterTable();
 }
 
 function setCardFilter(filter) {
@@ -147,45 +163,44 @@ function filterTable() {
 
         let matchesStatus = true;
 
-if (activeCardFilter === "active") {
+        if (activeCardFilter === "active") {
 
-    matchesStatus =
-        !row.classList.contains("warning") &&
-        !row.classList.contains("inactive");
-}
+            matchesStatus =
+                row.classList.contains("active");
+        }
 
-if (activeCardFilter === "warning") {
+        else if (activeCardFilter === "warning") {
 
-    matchesStatus =
-        row.classList.contains("warning");
-}
+            matchesStatus =
+                row.classList.contains("warning");
+        }
 
-if (activeCardFilter === "inactive") {
+        else if (activeCardFilter === "inactive") {
 
-    matchesStatus =
-        row.classList.contains("inactive");
-}
+            matchesStatus =
+                row.classList.contains("inactive");
+        }
 
-       row.style.display =
-    matchesSearch &&
-    matchesRole &&
-    matchesStatus
-        ? ""
-        : "none";
+        row.style.display =
+            matchesSearch &&
+            matchesRole &&
+            matchesStatus
+                ? ""
+                : "none";
     });
 }
 
-loadMembers();
 function populateRoleFilter() {
 
     const roleFilter =
         document.getElementById("roleFilter");
 
-    const currentValue = roleFilter.value;
+    const currentValue =
+        roleFilter.value;
 
     const roles = [
         ...new Set(
-            allMembers.map(m => m.role)
+            allMembers.map(member => member.role)
         )
     ].sort();
 
@@ -203,3 +218,5 @@ function populateRoleFilter() {
 
     roleFilter.value = currentValue;
 }
+
+loadMembers();
