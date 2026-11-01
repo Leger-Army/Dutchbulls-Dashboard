@@ -42,7 +42,11 @@
         placeholder="Zoek speler..."
         onkeyup="filterTable()"
     >
-
+    
+    <select id="roleFilter" onchange="filterTable()">
+    <option value="">Alle Rollen</option>
+    </select>
+    
     <table>
         <thead>
             <tr>
