@@ -13,25 +13,25 @@
     <h1>🐂 Dutch Bulls Dashboard</h1>
 
     <div class="stats">
-        <div class="card">
-            <h2 id="members">0</h2>
-            <p>Leden</p>
-        </div>
+        <div class="card" onclick="setCardFilter('all')">
+    <h2 id="members">0</h2>
+    <p>Leden</p>
+</div>
 
-        <div class="card green">
-            <h2 id="active">0</h2>
-            <p>Actief</p>
-        </div>
+<div class="card green" onclick="setCardFilter('active')">
+    <h2 id="active">0</h2>
+    <p>Actief</p>
+</div>
 
-        <div class="card orange">
-            <h2 id="warning">0</h2>
-            <p>3+ maanden</p>
-        </div>
+<div class="card orange" onclick="setCardFilter('warning')">
+    <h2 id="warning">0</h2>
+    <p>3+ maanden</p>
+</div>
 
-        <div class="card red">
-            <h2 id="inactive">0</h2>
-            <p>6+ maanden</p>
-        </div>
+<div class="card red" onclick="setCardFilter('inactive')">
+    <h2 id="inactive">0</h2>
+    <p>6+ maanden</p>
+</div>
     </div>
 
     <button onclick="loadMembers()">🔄 Update</button>
