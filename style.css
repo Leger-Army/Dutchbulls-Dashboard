@@ -31,13 +31,20 @@ h1{
 
 .card{
     background:#202225;
+    border-radius:12px;
     padding:20px;
-    border-radius:10px;
     text-align:center;
-    min-height:120px;
-    transition:all .25s ease;
-    cursor:pointer;
-    position:relative;
+    min-height:85px;
+    transition:.2s;
+}
+.card h2{
+    margin:0;
+    font-size:32px;
+}
+
+.card p{
+    margin-top:8px;
+    margin-bottom:0;
 }
 
 
