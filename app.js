@@ -1,5 +1,6 @@
 let activeCardFilter = "all";
 let allMembers = [];
+
 let currentSort = "days";
 let sortDirection = "desc";
 
@@ -56,6 +57,8 @@ async function loadMembers() {
 
         updateSortIndicators();
 
+        setCardFilter("all");
+
     } catch (error) {
 
         console.error("Fout:", error);
@@ -70,33 +73,29 @@ function renderTable() {
 
     table.innerHTML = "";
 
-    let active = 0;
-    let warning = 0;
-    let inactive = 0;
-
     allMembers.forEach(player => {
 
         let css = "";
         let status = "✅";
 
-      if (player.days >= 90) {
+        if (player.days >= 90) {
 
-    css = "inactive";
-    status = "🔴";
-    inactive++;
+            css = "inactive";
+            status = "🔴";
 
-} else if (player.days >= 75) {
+        }
+        else if (player.days >= 75) {
 
-    css = "warning";
-    status = "🟧";
-    warning++;
+            css = "warning";
+            status = "🟧";
 
-} else {
+        }
+        else {
 
-    css = "active";
-    status = "✅";
-    active++;
-}
+            css = "active";
+            status = "✅";
+
+        }
 
         table.innerHTML += `
             <tr class="${css}">
@@ -111,24 +110,7 @@ function renderTable() {
         `;
     });
 
-    document.getElementById("members").innerText =
-        allMembers.length;
-
-    document.getElementById("active").innerText =
-        active;
-
-    document.getElementById("warning").innerText =
-        warning;
-
-    document.getElementById("inactive").innerText =
-        inactive;
-    
-    document.getElementById("moderation").innerText = 
-        moderation;
-
     filterTable();
-
-    updateStats();
 }
 
 function setCardFilter(filter) {
@@ -151,15 +133,15 @@ function setCardFilter(filter) {
         document.querySelector(".orange").classList.add("selected");
     }
 
-   if (filter === "inactive") {
-    document.querySelectorAll(".red")[0]
-        .classList.add("selected");
-}
+    if (filter === "inactive") {
+        document.querySelectorAll(".red")[0]
+            .classList.add("selected");
+    }
 
-if (filter === "moderation") {
-    document.querySelectorAll(".red")[1]
-        .classList.add("selected");
-}
+    if (filter === "moderation") {
+        document.querySelectorAll(".red")[1]
+            .classList.add("selected");
+    }
 
     filterTable();
 }
@@ -202,33 +184,28 @@ function filterTable() {
 
             matchesStatus =
                 row.classList.contains("active");
-        }
 
+        }
         else if (activeCardFilter === "warning") {
 
             matchesStatus =
                 row.classList.contains("warning");
-        }
 
+        }
         else if (activeCardFilter === "inactive") {
 
             matchesStatus =
                 row.classList.contains("inactive");
-        }
 
+        }
         else if (activeCardFilter === "moderation") {
 
-    const role =
-        row.children[1]
-            .innerText
-            .toLowerCase();
-
-    matchesStatus =
-        row.classList.contains("inactive") &&
-        role !== "owner" &&
-        role !== "deputy_owner" &&
-        role !== "moderator";
-}
+            matchesStatus =
+                row.classList.contains("inactive") &&
+                role !== "owner" &&
+                role !== "deputy_owner" &&
+                role !== "moderator";
+        }
 
         row.style.display =
             matchesSearch &&
@@ -237,7 +214,7 @@ function filterTable() {
                 ? ""
                 : "none";
     });
-    
+
     updateStats();
 }
 
@@ -251,177 +228,38 @@ function updateStats() {
     let warning = 0;
     let inactive = 0;
     let moderation = 0;
-    
+
     rows.forEach(row => {
 
-        if(row.style.display === "none"){
+        if (row.style.display === "none") {
             return;
         }
 
         members++;
 
-        if(row.classList.contains("inactive")){
+        if (row.classList.contains("inactive")) {
 
-    inactive++;
+            inactive++;
 
-    const role =
-        row.children[1]
-            .innerText
-            .toLowerCase();
+            const role =
+                row.children[1]
+                    .innerText
+                    .toLowerCase();
 
-    if(
-        role !== "owner" &&
-        role !== "deputy_owner" &&
-        role !== "moderator"
-    ){
-        moderation++;
-    }
-}
-        else if(row.classList.contains("warning")){
+            if (
+                role !== "owner" &&
+                role !== "deputy_owner" &&
+                role !== "moderator"
+            ) {
+                moderation++;
+            }
+
+        }
+        else if (row.classList.contains("warning")) {
+
             warning++;
+
         }
-        else{
+        else {
+
             active++;
-        }
-    });
-
-    document.getElementById("members").innerText =
-        members;
-
-    document.getElementById("active").innerText =
-        active;
-
-    document.getElementById("warning").innerText =
-        warning;
-
-    document.getElementById("inactive").innerText =
-        inactive;
-}
-
-function populateRoleFilter() {
-
-    const roleFilter =
-        document.getElementById("roleFilter");
-
-    const currentValue =
-        roleFilter.value;
-
-    const roles = [
-        ...new Set(
-            allMembers.map(member => member.role)
-        )
-    ].sort();
-
-    roleFilter.innerHTML =
-        '<option value="">Alle Rollen</option>';
-
-    roles.forEach(role => {
-
-        roleFilter.innerHTML += `
-            <option value="${role}">
-                ${role}
-            </option>
-        `;
-    });
-
-    roleFilter.value = currentValue;
-}
-
-function sortTable(field) {
-
-    if (currentSort === field) {
-
-        sortDirection =
-            sortDirection === "asc"
-                ? "desc"
-                : "asc";
-
-    } else {
-
-        currentSort = field;
-
-        if (field === "days") {
-            sortDirection = "desc";
-        } else {
-            sortDirection = "asc";
-        }
-    }
-
-    allMembers.sort((a, b) => {
-
-        let result = 0;
-
-        switch (field) {
-
-            case "name":
-                result =
-                    a.name.localeCompare(b.name);
-                break;
-
-            case "role":
-                result =
-                    a.role.localeCompare(b.role);
-                break;
-
-            case "xp":
-                result =
-                    a.xp - b.xp;
-                break;
-
-            case "days":
-                result =
-                    a.days - b.days;
-                break;
-        }
-
-        return sortDirection === "asc"
-            ? result
-            : -result;
-    });
-
-    renderTable();
-    updateSortIndicators();
-}
-
-function updateSortIndicators() {
-
-    document
-        .querySelectorAll('th[id^="sort-"]')
-        .forEach(th => {
-            th.classList.remove("active-sort");
-        });
-
-    const headers = {
-        name: "Naam",
-        role: "Role",
-        xp: "XP",
-        days: "Dagen Inactief"
-    };
-
-    document.getElementById("sort-name").innerHTML =
-        headers.name;
-
-    document.getElementById("sort-role").innerHTML =
-        headers.role;
-
-    document.getElementById("sort-xp").innerHTML =
-        headers.xp;
-
-    document.getElementById("sort-days").innerHTML =
-        headers.days;
-
-    const activeHeader =
-        document.getElementById(
-            `sort-${currentSort}`
-        );
-
-    activeHeader.classList.add("active-sort");
-
-    activeHeader.innerHTML +=
-        sortDirection === "asc"
-            ? " ▲"
-            : " ▼";
-}
-
-loadMembers();
-    setCardFilter("all");
