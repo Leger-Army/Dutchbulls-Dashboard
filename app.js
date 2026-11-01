@@ -255,58 +255,88 @@ function sortTable(field) {
     } else {
 
         currentSort = field;
-        sortDirection = "asc";
 
+        if (field === "days") {
+            sortDirection = "desc";
+        } else {
+            sortDirection = "asc";
+        }
     }
 
     allMembers.sort((a, b) => {
 
         let result = 0;
 
-        if (field === "name") {
-            result =
-                a.name.localeCompare(b.name);
-        }
+        switch (field) {
 
-        if (field === "role") {
-            result =
-                a.role.localeCompare(b.role);
-        }
+            case "name":
+                result =
+                    a.name.localeCompare(b.name);
+                break;
 
-        if (field === "xp") {
-            result =
-                a.xp - b.xp;
-        }
+            case "role":
+                result =
+                    a.role.localeCompare(b.role);
+                break;
 
-        if (field === "days") {
-            result =
-                a.days - b.days;
+            case "xp":
+                result =
+                    a.xp - b.xp;
+                break;
+
+            case "days":
+                result =
+                    a.days - b.days;
+                break;
         }
 
         return sortDirection === "asc"
             ? result
             : -result;
-
     });
 
     renderTable();
+    updateSortIndicators();
 }
 
 function updateSortIndicators() {
 
-    document.getElementById("sort-name").innerHTML = "Naam";
-    document.getElementById("sort-role").innerHTML = "Role";
-    document.getElementById("sort-xp").innerHTML = "XP";
-    document.getElementById("sort-days").innerHTML = "Dagen Inactief";
+    document
+        .querySelectorAll('th[id^="sort-"]')
+        .forEach(th => {
+            th.classList.remove("active-sort");
+        });
 
-    const arrow =
+    const headers = {
+        name: "Naam",
+        role: "Role",
+        xp: "XP",
+        days: "Dagen Inactief"
+    };
+
+    document.getElementById("sort-name").innerHTML =
+        headers.name;
+
+    document.getElementById("sort-role").innerHTML =
+        headers.role;
+
+    document.getElementById("sort-xp").innerHTML =
+        headers.xp;
+
+    document.getElementById("sort-days").innerHTML =
+        headers.days;
+
+    const activeHeader =
+        document.getElementById(
+            `sort-${currentSort}`
+        );
+
+    activeHeader.classList.add("active-sort");
+
+    activeHeader.innerHTML +=
         sortDirection === "asc"
-            ? " ↑"
-            : " ↓";
-
-    document.getElementById(
-        `sort-${currentSort}`
-    ).innerHTML += arrow;
+            ? " ▲"
+            : " ▼";
 }
 
 loadMembers();
