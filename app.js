@@ -1,4 +1,5 @@
 let activeCardFilter = "all";
+let allMembers = [];
 
 function formatDate(dateString) {
 
@@ -88,8 +89,8 @@ async function loadMembers() {
             `;
         });
 
-        document.getElementById("members").innerText =
-            members.length;
+    document.getElementById("members").innerText =
+    allMembers.length;
 
         document.getElementById("active").innerText =
             active;
@@ -103,6 +104,13 @@ async function loadMembers() {
     } catch (error) {
         console.error("Fout:", error);
     }
+}
+
+function setCardFilter(filter) {
+
+    activeCardFilter = filter;
+
+    filterTable();
 }
 
 function filterTable() {
@@ -137,10 +145,33 @@ function filterTable() {
             selectedRole === "" ||
             role === selectedRole;
 
-        row.style.display =
-            matchesSearch && matchesRole
-                ? ""
-                : "none";
+        let matchesStatus = true;
+
+if (activeCardFilter === "active") {
+
+    matchesStatus =
+        !row.classList.contains("warning") &&
+        !row.classList.contains("inactive");
+}
+
+if (activeCardFilter === "warning") {
+
+    matchesStatus =
+        row.classList.contains("warning");
+}
+
+if (activeCardFilter === "inactive") {
+
+    matchesStatus =
+        row.classList.contains("inactive");
+}
+
+       row.style.display =
+    matchesSearch &&
+    matchesRole &&
+    matchesStatus
+        ? ""
+        : "none";
     });
 }
 
