@@ -41,7 +41,7 @@ async function loadMembers() {
             };
         });
 
-        members.sort((a, b) => b.days - a.days);
+        allMembers.sort((a, b) => b.days - a.days);
 
         const table = document.getElementById("membersTable");
 
@@ -51,7 +51,9 @@ async function loadMembers() {
         let warning = 0;
         let inactive = 0;
 
-        members.forEach(player => {
+        populateRoleFilter();
+
+        allMembers.forEach(player => {
 
             let css = "";
             let status = "✅";
@@ -103,22 +105,68 @@ async function loadMembers() {
 
 function filterTable() {
 
-    const search = document
-        .getElementById("search")
-        .value
-        .toLowerCase();
+    const search =
+        document.getElementById("search")
+            .value
+            .toLowerCase();
+
+    const selectedRole =
+        document.getElementById("roleFilter")
+            .value
+            .toLowerCase();
 
     const rows =
         document.querySelectorAll("#membersTable tr");
 
     rows.forEach(row => {
 
+        const text =
+            row.innerText.toLowerCase();
+
+        const role =
+            row.children[1]
+                .innerText
+                .toLowerCase();
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesRole =
+            selectedRole === "" ||
+            role === selectedRole;
+
         row.style.display =
-            row.innerText.toLowerCase().includes(search)
+            matchesSearch && matchesRole
                 ? ""
                 : "none";
-
     });
 }
 
 loadMembers();
+function populateRoleFilter() {
+
+    const roleFilter =
+        document.getElementById("roleFilter");
+
+    const currentValue = roleFilter.value;
+
+    const roles = [
+        ...new Set(
+            allMembers.map(m => m.role)
+        )
+    ].sort();
+
+    roleFilter.innerHTML =
+        '<option value="">Alle Rollen</option>';
+
+    roles.forEach(role => {
+
+        roleFilter.innerHTML += `
+            <option value="${role}">
+                ${role}
+            </option>
+        `;
+    });
+
+    roleFilter.value = currentValue;
+}
