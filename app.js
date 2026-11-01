@@ -1,5 +1,7 @@
 let activeCardFilter = "all";
 let allMembers = [];
+let currentSort = "days";
+let sortDirection = "desc";
 
 function formatDate(dateString) {
 
