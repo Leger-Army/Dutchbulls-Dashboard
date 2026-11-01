@@ -31,13 +31,20 @@ h1{
 
 .card{
     background:#202225;
+    border-radius:12px;
     padding:20px;
-    border-radius:10px;
     text-align:center;
-    min-height:120px;
-    transition:all .25s ease;
-    cursor:pointer;
-    position:relative;
+    min-height:85px;
+    transition:.2s;
+}
+.card h2{
+    margin:0;
+    font-size:32px;
+}
+
+.card p{
+    margin-top:8px;
+    margin-bottom:0;
 }
 
 
@@ -221,4 +228,33 @@ tr:hover{
 
 .active-red{
     background:#d50000;
+}
+
+.clickable{
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.clickable:hover{
+    transform:translateY(-2px);
+}
+
+.selected-green{
+    background:#00c853;
+    box-shadow:0 0 20px rgba(0,200,83,.4);
+}
+
+.selected-orange{
+    background:#ff9800;
+    box-shadow:0 0 20px rgba(255,152,0,.4);
+}
+
+.selected-red{
+    background:#d50000;
+    box-shadow:0 0 20px rgba(213,0,0,.4);
+}
+
+.selected-all{
+    background:#1976d2;
+    box-shadow:0 0 20px rgba(25,118,210,.4);
 }
