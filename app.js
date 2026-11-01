@@ -342,8 +342,6 @@ function updateSortIndicators() {
 loadMembers();
     setCardFilter("all");
 
-function filterStatus(type){
-
 const rows =
 document.querySelectorAll("#membersTable tr");
 
