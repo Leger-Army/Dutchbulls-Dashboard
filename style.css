@@ -222,3 +222,28 @@ tr:hover{
 .active-red{
     background:#d50000;
 }
+
+.clickable{
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.clickable:hover{
+    transform:translateY(-2px);
+}
+
+.selected-all{
+    background:#1976d2;
+}
+
+.selected-green{
+    background:#00c853;
+}
+
+.selected-orange{
+    background:#ff9800;
+}
+
+.selected-red{
+    background:#d50000;
+}
