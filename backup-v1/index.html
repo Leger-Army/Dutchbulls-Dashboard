@@ -36,6 +36,29 @@
 
     <button onclick="loadMembers()">🔄 Update</button>
 
+    <div class="filters">
+
+<button class="filter-btn active-all"
+onclick="filterStatus('all')">
+Alle
+</button>
+
+<button class="filter-btn"
+onclick="filterStatus('active')">
+Actief
+</button>
+
+<button class="filter-btn"
+onclick="filterStatus('warning')">
+3+ maanden
+</button>
+
+<button class="filter-btn"
+onclick="filterStatus('inactive')">
+6+ maanden
+</button>
+
+</div>
     <input
         type="text"
         id="search"
