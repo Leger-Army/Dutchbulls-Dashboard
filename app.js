@@ -263,3 +263,4 @@ function updateStats() {
         else {
 
             active++;
+        }
