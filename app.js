@@ -218,6 +218,35 @@ function filterTable() {
     updateStats();
 }
 
+function populateRoleFilter() {
+
+    const roleFilter =
+        document.getElementById("roleFilter");
+
+    const currentValue =
+        roleFilter.value;
+
+    const roles = [
+        ...new Set(
+            allMembers.map(member => member.role)
+        )
+    ].sort();
+
+    roleFilter.innerHTML =
+        '<option value="">Alle Rollen</option>';
+
+    roles.forEach(role => {
+
+        roleFilter.innerHTML += `
+            <option value="${role}">
+                ${role}
+            </option>
+        `;
+    });
+
+    roleFilter.value = currentValue;
+}
+
 function updateStats() {
 
     const rows =
