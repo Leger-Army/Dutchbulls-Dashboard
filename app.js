@@ -124,6 +124,8 @@ function renderTable() {
         inactive;
 
     filterTable();
+
+    updateStats();
 }
 
 function setCardFilter(filter) {
@@ -212,6 +214,50 @@ function filterTable() {
                 ? ""
                 : "none";
     });
+    
+    updateStats();
+}
+
+function updateStats() {
+
+    const rows =
+        document.querySelectorAll("#membersTable tr");
+
+    let members = 0;
+    let active = 0;
+    let warning = 0;
+    let inactive = 0;
+
+    rows.forEach(row => {
+
+        if(row.style.display === "none"){
+            return;
+        }
+
+        members++;
+
+        if(row.classList.contains("inactive")){
+            inactive++;
+        }
+        else if(row.classList.contains("warning")){
+            warning++;
+        }
+        else{
+            active++;
+        }
+    });
+
+    document.getElementById("members").innerText =
+        members;
+
+    document.getElementById("active").innerText =
+        active;
+
+    document.getElementById("warning").innerText =
+        warning;
+
+    document.getElementById("inactive").innerText =
+        inactive;
 }
 
 function populateRoleFilter() {
