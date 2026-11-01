@@ -126,6 +126,26 @@ function setCardFilter(filter) {
 
     activeCardFilter = filter;
 
+    document.querySelectorAll(".card").forEach(card => {
+        card.classList.remove("selected");
+    });
+
+    if (filter === "all") {
+        document.querySelector(".card").classList.add("selected");
+    }
+
+    if (filter === "active") {
+        document.querySelector(".green").classList.add("selected");
+    }
+
+    if (filter === "warning") {
+        document.querySelector(".orange").classList.add("selected");
+    }
+
+    if (filter === "inactive") {
+        document.querySelector(".red").classList.add("selected");
+    }
+
     filterTable();
 }
 
@@ -220,3 +240,73 @@ function populateRoleFilter() {
 }
 
 loadMembers();
+    setCardFilter("all");
+
+function filterStatus(type){
+
+const rows =
+document.querySelectorAll("#membersTable tr");
+
+const buttons =
+document.querySelectorAll(".filter-btn");
+
+buttons.forEach(btn=>{
+btn.classList.remove(
+"active-all",
+"active-green",
+"active-orange",
+"active-red"
+);
+});
+
+switch(type){
+
+case "all":
+buttons[0].classList.add("active-all");
+break;
+
+case "active":
+buttons[1].classList.add("active-green");
+break;
+
+case "warning":
+buttons[2].classList.add("active-orange");
+break;
+
+case "inactive":
+buttons[3].classList.add("active-red");
+break;
+
+}
+
+rows.forEach(row=>{
+
+if(type==="all"){
+row.style.display="";
+return;
+}
+
+if(type==="active"){
+row.style.display =
+!row.classList.contains("warning") &&
+!row.classList.contains("inactive")
+? ""
+: "none";
+}
+
+if(type==="warning"){
+row.style.display =
+row.classList.contains("warning")
+? ""
+: "none";
+}
+
+if(type==="inactive"){
+row.style.display =
+row.classList.contains("inactive")
+? ""
+: "none";
+}
+
+});
+}
