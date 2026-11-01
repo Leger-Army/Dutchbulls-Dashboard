@@ -20,7 +20,7 @@ async function loadMembers() {
 
         const rows = csv.trim().split("\n");
 
-        const members = rows.slice(1).map(row => {
+        allMembers = rows.slice(1).map(row => {
 
             const values = row.split(",");
 
